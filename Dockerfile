@@ -15,4 +15,4 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 ENV PYTHONUNBUFFERED=1
 
 # Run the bot
-CMD ["python", "/app/bot.py"]
+CMD ["python", "bot.py"]
