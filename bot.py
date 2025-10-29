@@ -33,9 +33,9 @@ from telegram import (
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 # config
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-OWNER_ID = int(os.environ.get("OWNER_ID", "0"))
-CHANNEL_LINK = os.environ.get("CHANNEL_LINK", "https://t.me/yourchannel")
+TELEGRAM_TOKEN = os.environ.get("8470120636:AAF4ipUqg8xKqho8WQInf8MuuDpn2749K1w")
+OWNER_ID = int(os.environ.get("OWNER_ID", "8233966309"))
+CHANNEL_LINK = os.environ.get("CHANNEL_LINK", "http://lofiBots.t.me")
 PISTON_URL = os.environ.get("PISTON_URL", "https://emkc.org/api/v2/piston/execute")  # replace with your Piston URL if you have one
 
 if not TELEGRAM_TOKEN or OWNER_ID == 0:
