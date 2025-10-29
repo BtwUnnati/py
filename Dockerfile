@@ -35,10 +35,5 @@ RUN useradd -m runner && chown -R runner:runner /app
 USER runner
 
 # Environment variables (set on Railway dashboard)
-ENV TELEGRAM_TOKEN=""
-ENV OWNER_ID=""
-ENV CHANNEL_LINK=""
-ENV PUBLIC_MODE="on"   # default ON as requested (change to "off" to restrict to owner)
-
 # Start bot
 CMD ["python", "bot.py"]
