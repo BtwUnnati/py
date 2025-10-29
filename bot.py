@@ -61,8 +61,7 @@ def parse_eval_input(text: str) -> Tuple[Optional[str], str]:
       - inline: /eval python print("hi")
       - fenced:
         /eval
-        ```python
-        print("hi")
+        ```\nprint("hi")
         ```
     Returns (language or None, code string)
     """
@@ -127,7 +126,7 @@ async def run_code_piston(code: str, language: str, version: str = "*", timeout_
         output = (stdout or "") + (stderr or "")
         if not output:
             exit_code = (run.get("code") if run else data.get("code"))
-            output = f"Process exited with code: {exit_code}" if exit_code is not None else "✅ Finished (no output)"
+            output = f"Process exited with code: {exit_code}" if exit_code is not None else "Finished (no output)"
         return output
 
 
@@ -136,18 +135,16 @@ async def run_code_piston(code: str, language: str, version: str = "*", timeout_
 # -------------------------
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("Owner 👑", url=normalize_owner_url(OWNER_USERNAME))],
-        [InlineKeyboardButton("Channel 📢", url=CHANNEL_LINK)],
+        [InlineKeyboardButton("Devloper", url=normalize_owner_url(OWNER_USERNAME))],
+        [InlineKeyboardButton("Channel", url=CHANNEL_LINK)],
     ]
     markup = InlineKeyboardMarkup(keyboard)
 
     text = (
-        "Hello — I'm a Code Execution Bot ✅\n\n"
-        "Send examples:\n"
-        "<code>/eval python print('hi')</code>\n"
-        "Or send a fenced block:\n"
-        "<pre>```python\nprint('hi')\n```</pre>\n\n"
-        "Supported: Python, JavaScript, C, C++"
+        "Hello — I'm a Code Execution Bot By @esxnz \n\n"
+        "Send examples :\n"
+        "<code>/ev print('hello_World')</code>\n"
+        "Supported Lang : Python, JavaScript, C, C++"
     )
     await update.message.reply_text(text, reply_markup=markup, parse_mode="HTML")
 
@@ -155,9 +152,7 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def help_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Usage examples:\n"
-        "<code>/eval python print('hello')</code>\n\n"
-        "Or:\n"
-        "<pre>/eval\n```python\nprint('hello')\n```</pre>",
+        "<code>/ev print('hello')</code>\n\n",
         parse_mode="HTML",
     )
 
@@ -168,7 +163,7 @@ async def eval_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Remove the command portion robustly (handles /eval@BotName)
     without_cmd = raw
-    if raw.lower().startswith("/eval"):
+    if raw.lower().startswith("/ev"):
         # Remove the first token (/eval or /eval@Bot)
         without_cmd = raw.partition(" ")[2] if " " in raw else raw.replace("/eval", "", 1).strip()
     # Also remove /eval@BotName cases
@@ -179,9 +174,7 @@ async def eval_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not code:
         await message.reply_text(
             "Please provide code. Examples:\n"
-            "<code>/eval python print('hi')</code>\n"
-            "Or:\n"
-            "<pre>/eval\n```python\nprint('hi')\n```</pre>",
+            "<code>/ev print('hello World')</code>\n",
             parse_mode="HTML",
         )
         return
@@ -222,11 +215,11 @@ async def eval_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # <b>RESULT — Python</b>
     # <pre>hi</pre>
     try:
-        reply_text = f"<b>RESULT — {html.escape(lang.title())}</b>\n<pre>{safe_output}</pre>"
+        reply_text = f"<b>Out Put — {html.escape(lang.title())}</b>\n<pre>{safe_output}</pre>"
         await message.reply_text(reply_text, parse_mode="HTML")
     except Exception:
         # Fallback: if HTML sending fails for any reason, send a plain-escaped message
-        await message.reply_text(f"RESULT — {lang.title()}\n\n{safe_output}")
+        await message.reply_text(f"Out Put — {lang.title()}\n\n{safe_output}")
 
 
 async def text_fallback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -242,7 +235,7 @@ def main():
 
     app.add_handler(CommandHandler("start", start_handler))
     app.add_handler(CommandHandler("help", help_handler))
-    app.add_handler(CommandHandler("eval", eval_handler))
+    app.add_handler(CommandHandler("ev", eval_handler))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_fallback))
 
     app.run_polling()
