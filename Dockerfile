@@ -1,39 +1,18 @@
-# Use a Debian-based slim Python image
+# Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install runtimes and build tools for Option A:
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    gcc \
-    g++ \
-    make \
-    ca-certificates \
-    curl \
-    wget \
-    unzip \
-    default-jdk \
-    php-cli \
-    nodejs \
-    npm \
-    git \
- && rm -rf /var/lib/apt/lists/*
-
-# Create app directory
+# Set working directory
 WORKDIR /app
 
-# Copy requirements and bot code
+# Copy files
+COPY bot.py /app/bot.py
 COPY requirements.txt /app/requirements.txt
+
+# Install dependencies
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copy bot source
-COPY bot.py /app/bot.py
+# Expose nothing (bot uses polling)
+ENV PYTHONUNBUFFERED=1
 
-# Create non-root user (best practice)
-RUN useradd -m runner && chown -R runner:runner /app
-USER runner
-
-# Environment variables (set on Railway dashboard)
-# Start bot
-CMD ["python", "bot.py"]
+# Run the bot
+CMD ["python", "/app/bot.py"]
