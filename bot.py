@@ -35,9 +35,9 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton, constan
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 # Config from env
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "")
-OWNER_ID = int(os.environ.get("OWNER_ID", "0") or 0)
-CHANNEL_LINK = os.environ.get("CHANNEL_LINK", "")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "8470120636:AAF4ipUqg8xKqho8WQInf8MuuDpn2749K1w")
+OWNER_ID = int(os.environ.get("OWNER_ID", "8470120636") or 8470120636)
+CHANNEL_LINK = os.environ.get("CHANNEL_LINK", "http://lofiBots.t.me")
 PUBLIC_MODE = os.environ.get("PUBLIC_MODE", "on").lower()  # "on" or "off"
 
 if not TELEGRAM_TOKEN or OWNER_ID == 0:
